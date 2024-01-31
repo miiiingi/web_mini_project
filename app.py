@@ -28,10 +28,12 @@ with app.app_context():
 
 # 서버 사이드 관련 코드
 
+# 테스트용 메인 페이지 라우팅
 @app.route('/')
 def testMain():
     return render_template('test.html')
 
+# 회원가입 페이지
 @app.route('/account/signup/', methods=['GET', 'POST'], endpoint='signup')
 def signup():
     if request.method == 'POST':
@@ -39,6 +41,13 @@ def signup():
         email = request.form['email']
         userId = request.form['userId']
         password = request.form['password']
+
+        # 중복 유효성 검사
+        if is_email_exists(email):
+            return render_template('signup.html', error = "이미 사용 중인 이메일입니다. 다른 이메일을 입력해주세요.")
+
+        if is_userId_exists(userId):
+            return render_template('signup.html', error = "이미 사용 중인 아이디입니다. 다른 아이디를 입력해주세요.")
 
         new_account = Accounts(name=name, email=email, userId=userId, password=password)
         userDb.session.add(new_account)
@@ -48,6 +57,13 @@ def signup():
         return redirect(url_for('testMain')) # 가입 성공 시 원래 화면으로
 
     return render_template('signup.html')
+
+# 이메일, 아이디 가입 중복 여부 검증 함수
+def is_email_exists(email):
+    return bool(Accounts.query.filter_by(email=email).first())
+
+def is_userId_exists(userId):
+    return bool(Accounts.query.filter_by(userId=userId).first())
 
 if __name__ == '__main__':  
     app.run(debug=True)
