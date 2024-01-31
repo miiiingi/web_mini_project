@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
@@ -86,6 +86,13 @@ def login():
         error = "잘못된 이메일 또는 비밀번호입니다. 다시 시도해주세요."
 
     return render_template('login.html', error=error)
+
+# 로그아웃 기능
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('testMain'))
 
 if __name__ == '__main__':  
     app.run(debug=True)
