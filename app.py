@@ -87,6 +87,10 @@ def login():
 
     return render_template('login.html', error=error)
 
+@login_manager.user_loader
+def load_user(user_id):
+    return Accounts.query.get(int(user_id))
+
 # 로그아웃 기능
 @app.route('/logout')
 @login_required
