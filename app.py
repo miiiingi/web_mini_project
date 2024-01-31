@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin
+from flask_login import LoginManager, UserMixin, login_user
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
@@ -12,23 +12,23 @@ login_manager.init_app(app)
 
 # 회원정보 데이터베이스
 app.config['SQLALCHEMY_DATABASE_URI'] =\
-        'sqlite:///' + os.path.join(basedir, 'userDatabase.db')
+        'sqlite:///' + os.path.join(basedir, 'database.db')
 
-userDb = SQLAlchemy(app)
+db = SQLAlchemy(app)
 
-class Accounts(userDb.Model):
-    id = userDb.Column(userDb.Integer, primary_key=True)
-    name = userDb.Column(userDb.String(10), nullable=False)
-    email = userDb.Column(userDb.String(100), nullable=False)
-    userId = userDb.Column(userDb.String(100), nullable=False)
-    password = userDb.Column(userDb.String(100), nullable=False)
+class Accounts(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(10), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    userId = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
         return f"<Account id={self.id}, name={self.name}, email={self.email}, userId={self.userId}>"
     # 보안 상의 목적으로 패스워드는 리턴 x
 
 with app.app_context():
-    userDb.create_all()
+    db.create_all()
 
 
 # 서버 사이드 관련 코드
@@ -55,9 +55,9 @@ def signup():
             return render_template('signup.html', error = "이미 사용 중인 아이디입니다. 다른 아이디를 입력해주세요.")
 
         new_account = Accounts(name=name, email=email, userId=userId, password=password)
-        userDb.session.add(new_account)
-        userDb.session.commit()
-        userDb.session.close()
+        db.session.add(new_account)
+        db.session.commit()
+        db.session.close()
 
         return redirect(url_for('testMain')) # 가입 성공 시 원래 화면으로
 
@@ -73,7 +73,19 @@ def is_userId_exists(userId):
 # 로그인 페이지
 @app.route('/account/login/', methods=['GET', 'POST'], endpoint='login')
 def login():
-    return render_template('login.html')
+    error = None
+    if request.method == 'POST':
+        userId = request.form.get('userId')
+        password = request.form.get('password')
+        user = Accounts.query.filter_by(userId=userId).first()
+
+        if user and user.password == password:
+            login_user(user)
+            return redirect(url_for('testMain'))
+
+        error = "잘못된 이메일 또는 비밀번호입니다. 다시 시도해주세요."
+
+    return render_template('login.html', error=error)
 
 if __name__ == '__main__':  
     app.run(debug=True)
