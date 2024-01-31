@@ -57,6 +57,13 @@
         opacity: 1.1;
         cursor: grab;
       }
+
+      p {
+        color: red;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 600;
+      }
     </style>
   </head>
   <body>
@@ -72,6 +79,10 @@
 
       <label for="password">Password</label>
       <input type="password" id="password" name="password" required />
+
+      {% if error %}
+      <p>{{ error }}</p>
+      {% endif %}
 
       <button type="submit">Sign Up</button>
     </form>
