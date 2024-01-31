@@ -2,9 +2,13 @@ import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+import secrets
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
+
+# 시크릿 키 추가
+app.secret_key = secrets.token_hex(16)
 
 # 로그인 관련 세팅
 login_manager = LoginManager()
