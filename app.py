@@ -5,7 +5,6 @@ app = Flask(__name__)
 def home():
     return render_template("index.html")
 
-'sdf'
 
 if __name__ == "__main__":
     app.run(debug=True, port=8080)
