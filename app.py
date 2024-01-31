@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 import secrets
@@ -85,7 +85,7 @@ def login():
 
         if user and user.password == password:
             login_user(user)
-            return redirect(url_for('testMain'))
+            return redirect(url_for('user_profile', userId=user.userId))
 
         error = "잘못된 이메일 또는 비밀번호입니다. 다시 시도해주세요."
 
@@ -101,6 +101,16 @@ def load_user(user_id):
 def logout():
     logout_user()
     return redirect(url_for('testMain'))
+
+# 로그인 확인 테스트 페이지용 함수
+@app.route('/account/<userId>', endpoint='user_profile')
+@login_required
+def user_profile(userId):
+    # 현재 사용자와 요청된 사용자가 다르면 404 에러를 반환합니다.
+    if current_user.userId != userId:
+        abort(404)
+
+    return render_template('profile.html', user=current_user)
 
 if __name__ == '__main__':  
     app.run(debug=True)

@@ -4,12 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    {% if current_user.is_authenticated %}
-    <a href="{{ url_for('logout') }}">Log Out</a>
-    {% else %}
     <a href="{{ url_for('login') }}">Log In</a>
     <a href="{{ url_for('signup') }}">Sign Up</a>
-    {% endif %}
   </head>
   <body></body>
 </html>
