@@ -103,7 +103,7 @@ def logout():
     return redirect(url_for('testMain'))
 
 # 로그인 확인 테스트 페이지용 함수
-@app.route('/account/<userId>', endpoint='user_profile')
+@app.route('/<userId>', endpoint='user_profile')
 @login_required
 def user_profile(userId):
     # 현재 사용자와 요청된 사용자가 다르면 404 에러를 반환합니다.
