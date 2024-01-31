@@ -24,18 +24,70 @@
 
     header {
       height: 100px;
-      background-color: #bbb;
+      background-color: #4ba66a;
+    }
+
+    main {
+      background: #fff;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     footer {
       height: 100px;
-      background-color: #bbb;
+      background-color: #4ba66a;
       margin-top: auto;
+    }
+
+    .container {
+      background: #f7edda;
+      width: 80%;
+      max-width: 800px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    article {
+      width: 90%;
+      height: 200px;
+      border: 2px solid #46a65e;
+      border-radius: 12px;
+      margin: 40px auto 0;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .img_wrap {
+      height: 150px;
+      width: 200px;
+      border: 1px solid black;
+      margin-right: 50px;
+    }
+
+    .text_wrap {
+      height: 150px;
     }
   </style>
   <body>
     <header>header</header>
-    <main>main</main>
+    <main>
+      <div class="container">
+        <article>
+          <div class="img_wrap">image</div>
+          <div class="text_wrap">
+            <p class="title">title</p>
+            <p class="writer">writer</p>
+            <p class="content">content</p>
+          </div>
+        </article>
+        <article></article>
+        <article></article>
+      </div>
+    </main>
     <footer>footer</footer>
   </body>
 </html>
