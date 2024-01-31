@@ -80,34 +80,27 @@
   <!-- Bootstrap Navbar 추가 -->
   <header class="navbar navbar-expand-lg navbar-light bg-light">
   </header>
-
   <main>
     <div class="container">
       <div class="container custom-container">
         <div class="row justify-content-center">
           <div class="col-md-8">
+            <!-- 수정된 부분: "글쓰기가 완료되었습니다." 메시지 출력 -->
+            <div class="alert alert-success" role="alert">
+              글쓰기가 완료되었습니다.
+            </div>
+            <!-- 글 작성 폼 삭제 -->
 
-            <!-- 글 작성 폼 -->
-            <form method="POST" action="{{url_for('newPost')}}" id="postForm">
-              <div class="form-group">
-                <label for="title">제목</label>
-                <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요" required>
-              </div>
-
-              <div class="form-group">
-                <label for="content">내용</label>
-                <textarea class="form-control" id="content" name="content" rows="10" placeholder="내용을 입력하세요"
-                  required></textarea>
-              </div>
-
-              <button type="button" class="btn btn-success" onclick="submitForm()">글 작성</button>
-              <button type="button" class="btn btn-success" onclick="returnToHome()">취소</button>
-            </form>
+            <!-- 취소 버튼 클릭 시 홈페이지로 이동하는 함수 추가 -->
+            <button type="button" class="btn btn-success" onclick="returnToHome()">홈페이지로 이동</button>
+            <button type="button" class="btn btn-success" onclick="returnToNewPost()">다른 글 작성하기</button>
           </div>
         </div>
       </div>
     </div>
   </main>
+
+
 
   <footer>footer</footer>
 
@@ -115,26 +108,13 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
   <script>
-    function submitForm() {
-      // form의 데이터를 FormData 객체로 가져옴
-      var formData = new FormData(document.getElementById("postForm"));
-
-      // 서버로 데이터를 전송하는 AJAX 요청을 수행
-      fetch("{{ url_for('newPost') }}", {
-        method: "POST",
-        body: formData
-      })
-        .then(response => response.json())  // 필요에 따라 처리
-        .catch(error => {
-          console.error("Error:", error);
-          // 오류 처리를 추가할 수 있음
-        });
-      window.location.href = "{{ url_for('completePost') }}";
+    function returnToHome() {
+      window.location.href = "{{ url_for('home') }}";
     }
   </script>
   <script>
-    function returnToHome() {
-      window.location.href = "{{ url_for('home') }}";
+    function returnToNewPost() {
+      window.location.href = "{{ url_for('newPost') }}";
     }
   </script>
 
