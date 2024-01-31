@@ -66,8 +66,9 @@ def is_userId_exists(userId):
     return bool(Accounts.query.filter_by(userId=userId).first())
 
 # 로그인 페이지
+@app.route('/account/login/', methods=['GET', 'POST'], endpoint='login')
 def login():
-    return
+    return render_template('login.html')
 
 if __name__ == '__main__':  
     app.run(debug=True)
