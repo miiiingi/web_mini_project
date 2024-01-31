@@ -65,5 +65,9 @@ def is_email_exists(email):
 def is_userId_exists(userId):
     return bool(Accounts.query.filter_by(userId=userId).first())
 
+# 로그인 페이지
+def login():
+    return
+
 if __name__ == '__main__':  
     app.run(debug=True)
