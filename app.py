@@ -5,7 +5,7 @@ app = Flask(__name__)
 def testMain():
     return render_template('test.html')
 
-@app.route('/account/signup')
+@app.route('/account/signup/', endpoint='signup')
 def signup():
     return render_template('signup.html')
 
