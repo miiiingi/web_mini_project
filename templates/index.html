@@ -117,7 +117,7 @@
       </div>
       {% if user.is_authenticated %}
       <p>User ID: {{ user.userId }}</p>
-      <a href="{{ url_for('newPost') }}">글쓰기</a>
+      <a href="{{ url_for('newPost', userId = user.userId) }}">글쓰기</a>
       <a href="{{ url_for('logout') }}">로그아웃</a>
       {% else %}
       <a href="{{ url_for('login') }}">로그인</a>
