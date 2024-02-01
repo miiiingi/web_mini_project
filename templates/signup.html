@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+    <style>
+      body {
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 16px;
+        font-size: 15px;
+        font-weight: 300;
+        box-sizing: border-box;
+        border: 1px solid #7676767f;
+      }
+
+      button {
+        width: 100%;
+        background-color: #4caf50;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+      }
+
+      button:hover {
+        opacity: 0.8;
+        cursor: pointer;
+      }
+
+      button:active {
+        opacity: 1.1;
+        cursor: grab;
+      }
+
+      p {
+        color: red;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="{{ url_for('signup') }}" method="POST">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="username">ID</label>
+      <input type="text" id="userId" name="userId" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required />
+
+      {% if error %}
+      <p>{{ error }}</p>
+      {% endif %}
+
+      <button type="submit">Sign Up</button>
+    </form>
+  </body>
+</html>
