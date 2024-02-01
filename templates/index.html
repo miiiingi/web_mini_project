@@ -42,6 +42,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      background-color: #f5f5f5;
     }
 
     footer {
@@ -51,34 +52,50 @@
     }
 
     .container {
-      background: #f7edda;
-      width: 80%;
-      max-width: 800px;
+      background: #f5f5f5;
+      max-width: 1080px;
       height: 100%;
       display: flex;
-      flex-direction: column;
+      /* flex-direction: column; */
+      gap: 20px;
+    }
+
+    a {
+      color: #000;
+      text-decoration: none;
+      width: 288px;
+      height: 362px;
     }
 
     article {
-      width: 90%;
-      height: 200px;
-      border: 2px solid #46a65e;
-      border-radius: 12px;
-      margin: 40px auto 0;
       display: flex;
-      align-items: center;
-      padding: 0 20px;
+      flex-direction: column;
+      background: #fff;
     }
 
-    .img_wrap {
-      height: 150px;
-      width: 200px;
-      border: 1px solid black;
-      margin-right: 50px;
+    article:hover {
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    img {
+      width: 288px;
+      height: 168px;
+      /* margin: 0 20px; */
     }
 
     .text_wrap {
-      height: 150px;
+      margin-left: 22px;
+    }
+
+    .content {
+      overflow: hidden;
+      white-space: normal;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      text-decoration-line: none;
+      word-break: keep-all;
     }
   </style>
 
@@ -111,35 +128,35 @@
     <main>
       <div class="container">
         {%for post in posts%}
-        <article post_writer="{{post.username}}" post_number="{{post.id}}">
-          <div class="img_wrap">
-            <img src="{{post.image_url}}" />
-          </div>
-          <div class="text_wrap">
-            <p class="title">{{post.title}}</p>
-            <p class="writer">{{post.writer}}</p>
-            <p class="content">{{post.content}}</p>
-            <p class="content">{{post.address}}</p>
-          </div>
-        </article>
+        <a href="/test/1">
+          <article post_writer="{{post.username}}" post_number="{{post.id}}">
+            <div class="img_wrap">
+              <img
+                src="https://lh3.googleusercontent.com/p/AF1QipOG9J0lJeSNU7qvXAmpTp9pzMQIlclrC6F8-2x6=s1360-w1360-h1020"
+              />
+            </div>
+            <div class="text_wrap">
+              <p class="title">{{post.title}}</p>
+              <p class="writer">{{post.username}}</p>
+              <p class="content">{{post.content}}</p>
+            </div>
+          </article>
+        </a>
         {% endfor %}
-
-        <article></article>
-        <article></article>
       </div>
     </main>
 
     <footer>footer</footer>
     <script>
-      const posts = document.getElementsByTagName("article");
+      // const posts = document.getElementsByTagName("article");
 
-      for (let i = 0; i < posts.length; i++) {
-        posts[i].addEventListener("click", function () {
-          const postWriter = this.getAttribute("post_writer");
-          const postNumber = this.getAttribute("post_number");
-          window.location.href = `${postWriter}/${postNumber}`;
-        });
-      }
+      // for (let i = 0; i < posts.length; i++) {
+      //   posts[i].addEventListener("click", function () {
+      //     const postWriter = this.getAttribute("post_writer");
+      //     const postNumber = this.getAttribute("post_number");
+      //     window.location.href = `${postWriter}/${postNumber}`;
+      //   });
+      // }
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
