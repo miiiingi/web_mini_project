@@ -46,7 +46,8 @@ with app.app_context():
 # 테스트용 메인 페이지 라우팅
 @app.route('/')
 def home():
-    return render_template('index.html', user=current_user)
+    posts = Post_DB.query.all()
+    return render_template('index.html', user=current_user, posts=posts)
 
 
 @app.route('/newPost/<userId>', methods=['GET', 'POST'])
