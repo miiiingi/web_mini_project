@@ -107,5 +107,13 @@ def logout():
 def unauthorized(error):
     return redirect(url_for('home', user=current_user))
 
+# ---------------- 은미 --------------------
+
+# 마이 페이지 
+@app.route('/accounts')
+def accounts():
+    return render_template('mypage.html')
+
+
 if __name__ == '__main__':  
     app.run(debug=True)

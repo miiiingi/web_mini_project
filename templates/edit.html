@@ -20,11 +20,11 @@
                     <ul class="navbar-nav">
                         <!-- 메인페이지로 -->
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">홈</a>
+                            <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">홈</a>
                         </li>
                         <!-- 로그인된 아이디 --->
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">@email</a>
+                            <a class="nav-link active" aria-current="page" href="{{ url_for('accounts') }}">mypage</a>
                         </li>
                         </li>
                     </ul>

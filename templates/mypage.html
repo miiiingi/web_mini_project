@@ -32,11 +32,12 @@
                     <ul class="navbar-nav">
                         <!-- 메인페이지로 -->
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">메인페이지</a>
+                            <!-- herf 버튼 눌렀을때 다른 페이지로 이동하는거  -->
+                            <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">메인페이지</a>
                         </li>
                         <!-- 로그인된 아이디 --->
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">@email</a>
+                            <a class="nav-link active" aria-current="page" href="{{ url_for('accounts') }}">@email</a>
                         </li>
                         </li>
                     </ul>
