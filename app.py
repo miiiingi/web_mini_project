@@ -15,13 +15,12 @@ class Post_DB(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text, nullable=False)
     content = db.Column(db.Text, nullable=False)
-
-    def __repr__(self):
-        return f'{self.username} {self.title} 추천 by {self.username}'
+    address = db.Column(db.Text, nullable=False)
+    username = db.Column(db.Text, nullable=False)
 
 with app.app_context():
-    if os.path.exists(abs_file_name):
-        db.drop_all()
+    # if os.path.exists(abs_file_name):
+    #     db.drop_all()
     db.create_all()
 
 @app.route('/')
@@ -33,7 +32,9 @@ def newPost():
     if request.method == "POST":
         title = request.form.get('title')
         content = request.form.get('content')
-        post_db = Post_DB(title = title, content = content)
+        address = request.form.get('address')
+        username = request.form.get('username')
+        post_db = Post_DB(title = title, content = content, address = address, username = username)
         db.session.add(post_db)
         db.session.commit()
     return render_template('newPost.html')
