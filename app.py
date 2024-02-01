@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from sqlalchemy import desc
@@ -19,6 +19,8 @@ app.config['SQLALCHEMY_BINDS'] = {
     'secondary': 'sqlite:///' + post_db_file_name
 }
 db = SQLAlchemy(app)
+
+
 class Accounts(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(10), nullable=False)
@@ -30,6 +32,7 @@ class Accounts(db.Model, UserMixin):
         return f"<Account id={self.id}, name={self.name}, email={self.email}, userId={self.userId}>"
     # 보안 상의 목적으로 패스워드는 리턴 x
 
+
 class Post_DB(db.Model):
     __bind_key__ = 'secondary'
     id = db.Column(db.Integer, primary_key=True)
@@ -37,13 +40,16 @@ class Post_DB(db.Model):
     content = db.Column(db.Text, nullable=False)
     address = db.Column(db.Text, nullable=False)
     userId = db.Column(db.Text, nullable=False)
-    postNumber = db.Column(db.Integer, nullable=False, default = 1)
+    postNumber = db.Column(db.Integer, nullable=False, default=1)
+
 
 with app.app_context():
     db.create_all()
     db.create_all(bind_key='secondary')
 
 # 테스트용 메인 페이지 라우팅
+
+
 @app.route('/')
 def home():
     posts = Post_DB.query.all()
@@ -58,7 +64,8 @@ def newPost(userId):
         content = request.form.get('content')
         address = request.form.get('address')
         userId = request.form.get('userId')
-        existing_post = Post_DB.query.filter_by(userId=userId).order_by(desc(Post_DB.postNumber)).first()
+        existing_post = Post_DB.query.filter_by(
+            userId=userId).order_by(desc(Post_DB.postNumber)).first()
         if existing_post:
             post_db = Post_DB(
                 title=title,
@@ -77,6 +84,50 @@ def newPost(userId):
         db.session.add(post_db)
         db.session.commit()
     return render_template('newPost.html', userId=userId)
+
+
+@app.route('/userPost/<userId>/<postNumber>')
+def userPost(userId, postNumber):
+    posts = Post_DB.query.filter_by(userId=userId, postNumber=postNumber)
+    return render_template('userPost.html', user=current_user, posts=posts, userId=userId, postNumber=postNumber)
+
+
+@app.route('/userPost/<userId>')
+def userPostAll(userId):
+    posts = Post_DB.query.filter_by(userId=userId)
+    return render_template('userPost.html', user=current_user, posts=posts, userId=userId)
+
+@app.route('/editPost/<userId>/<postNumber>', methods=['GET', 'POST'])
+@login_required
+def editPost(userId, postNumber):
+    post = Post_DB.query.filter_by(
+        userId=userId, postNumber=postNumber).first()
+    if not post:
+        flash('게시물을 찾을 수 없습니다.', 'danger')
+        return redirect(url_for('userPost', userId=userId, postNumber=postNumber))
+
+    if request.method == 'POST':
+        # 수정된 내용을 받아와서 기존 레코드를 업데이트
+        post.title = request.form.get('title')
+        post.content = request.form.get('content')
+        post.address = request.form.get('address')
+        db.session.commit()
+        flash('게시물이 성공적으로 수정되었습니다.', 'success')
+        return redirect(url_for('userPost', userId=userId, postNumber=postNumber))
+
+    return render_template('editPost.html', user=current_user, posts=post, userId=userId, postNumber=postNumber)
+
+@app.route('/deletePost/<userId>/<postNumber>')
+@login_required
+def deletePost(userId, postNumber):
+    post = Post_DB.query.filter_by(userId=userId, postNumber=postNumber).first()
+    if post:
+        db.session.delete(post)
+        db.session.commit()
+        flash('게시물이 성공적으로 삭제되었습니다.', 'success')
+    else:
+        flash('게시물을 찾을 수 없습니다.', 'danger')
+    return redirect(url_for('home'))
 
 
 @app.route('/completePost/<userId>')
@@ -133,6 +184,7 @@ def is_userId_exists(userId):
 @app.route('/account/login/', methods=['GET', 'POST'], endpoint='login')
 def login():
     error = None
+    posts = Post_DB.query.all()
     if request.method == 'POST':
         userId = request.form.get('userId')
         password = request.form.get('password')
