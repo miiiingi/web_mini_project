@@ -60,31 +60,27 @@
       gap: 20px;
     }
 
-    a {
+    .article_wrap {
       color: #000;
       text-decoration: none;
       width: 288px;
       height: 362px;
     }
 
+    .article_wrap:hover {
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+    }
+
     article {
+      height: 362px;
       display: flex;
       flex-direction: column;
       background: #fff;
     }
 
-    article:hover {
-      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
-    }
-
     img {
       width: 288px;
       height: 168px;
-      /* margin: 0 20px; */
-    }
-
-    .text_wrap {
-      margin-left: 22px;
     }
 
     .content {
@@ -128,7 +124,7 @@
     <main>
       <div class="container">
         {%for post in posts%}
-        <a href="/test/1">
+        <a class="article_wrap" href="/">
           <article post_writer="{{post.username}}" post_number="{{post.id}}">
             <div class="img_wrap">
               <img
