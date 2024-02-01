@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from sqlalchemy import desc
 import secrets
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -35,7 +36,8 @@ class Post_DB(db.Model):
     title = db.Column(db.Text, nullable=False)
     content = db.Column(db.Text, nullable=False)
     address = db.Column(db.Text, nullable=False)
-    username = db.Column(db.Text, nullable=False)
+    userId = db.Column(db.Text, nullable=False)
+    postNumber = db.Column(db.Integer, nullable=False, default = 1)
 
 with app.app_context():
     db.create_all()
@@ -44,27 +46,42 @@ with app.app_context():
 # 테스트용 메인 페이지 라우팅
 @app.route('/')
 def home():
-    return render_template('index.html', user=current_user)
+    posts = Post_DB.query.all()
+    return render_template('index.html', user=current_user, posts=posts)
 
 
-@app.route('/newPost', methods=['GET', 'POST'])
+@app.route('/newPost/<userId>', methods=['GET', 'POST'])
 @login_required
-def newPost():
+def newPost(userId):
     if request.method == "POST":
         title = request.form.get('title')
         content = request.form.get('content')
         address = request.form.get('address')
-        username = request.form.get('username')
-        post_db = Post_DB(title=title, content=content,
-                          address=address, username=username)
+        userId = request.form.get('userId')
+        existing_post = Post_DB.query.filter_by(userId=userId).order_by(desc(Post_DB.postNumber)).first()
+        if existing_post:
+            post_db = Post_DB(
+                title=title,
+                content=content,
+                address=address,
+                userId=userId,
+                postNumber=existing_post.postNumber + 1
+            )
+        else:
+            post_db = Post_DB(
+                title=title,
+                content=content,
+                address=address,
+                userId=userId,
+            )
         db.session.add(post_db)
         db.session.commit()
-    return render_template('newPost.html')
+    return render_template('newPost.html', userId=userId)
 
 
-@app.route('/completePost')
-def completePost():
-    return render_template('completePost.html')
+@app.route('/completePost/<userId>')
+def completePost(userId):
+    return render_template('completePost.html', userId=userId)
 
 
 # 시크릿 키 추가
