@@ -35,7 +35,7 @@
 
 
     <!-- 회원정보 수정 칸 -->
-    <form>
+    <form action="{{ url_for('update_member') }}" method="patch" name="edit_members">
         <!-- 가운데 정렬  -->
         <div class="container mt-5">
             <div class="row justify-content-center">
@@ -44,35 +44,65 @@
                     <!-- 한줄 띄기  -->
                     <br>
                     <!-- 이름  -->
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="exampleInputName1" class="form-label">이름</label>
-                        <input type="text" class="form-control" id="exampleInputName1">
-                    </div>
+                        <input type="text" class="form-control" id="exampleInputName1" name="name">
+                    </div> -->
                     <!-- 아이디  -->
                     <div class="mb-3">
                         <label for="exampleInputUsername1" class="form-label">아이디</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1">
+                        <input type="text" class="form-control" id="exampleInputUsername1" name="userId">
                     </div>
                     <!-- 비밀번호  -->
                     <div class="mb-3">
                         <!-- (for=id 같아야함) for 속성은 <label> 요소와 연결된 입력 요소의 id 속성과 매핑합니다. 이렇게 함으로써 화면에서 레이블을 클릭하면 연결된 입력 필드로 포커스가 이동합니다. 그렇기 때문에 for 속성값은 연결하려는 입력 필드의 id 속성값과 일치해야 합니다. -->
                         <!-- 연결할때 메모장 확인         -->
                         <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1">
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="password">
                     </div>
                     <!-- 이메일  -->
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary float-end">수정 완료</button>
-    </form>
-    </div>
-    </div>
-    </div>
+                    <button type="submit" class="btn btn-primary float-end" onclick="updateMember()">수정 완료</button>
+                </div>
+            </div>
+            </div>
+                </form>
     <!-- 회원정보 수정 칸 끝 -->
+
+    <!-- <script>
+        function updateMember() {
+            // 사용자 입력 값 가져오기
+            const name = document.getElementById("name").value;
+            const userId = document.getElementById("userId").value;
+            const password = document.getElementById("password").value;
+            const email = document.getElementById("email").value;
+
+            // 회원 정보 객체 생성
+            const memberData = { "name": name, "userId": userId, "password": password, "email": email };
+
+            // 서버에 PATCH 요청 보내기
+            fetch('/members/1', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(memberData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 서버 응답 처리
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script> -->
 
     <!-- <h1>마이페이지</h1>
     <p>'이름': '이은미'</p>
