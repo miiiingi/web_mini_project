@@ -114,7 +114,7 @@
   </script>
   <script>
     function returnToNewPost() {
-      window.location.href = "{{ url_for('newPost') }}";
+      window.location.href = "{{ url_for('newPost', userId = userId) }}";
     }
   </script>
 

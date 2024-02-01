@@ -88,7 +88,7 @@
           <div class="col-md-8">
 
             <!-- 글 작성 폼 -->
-            <form method="POST" action="{{url_for('newPost')}}" id="postForm">
+            <form method="POST" action="{{url_for('newPost', userId = userId)}}" id="postForm">
               <div class="form-group">
                 <label for="title">제목</label>
                 <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요" required>
@@ -106,12 +106,7 @@
                   required></textarea>
               </div>
 
-              <div class="form-group">
-                <label for="content">username</label>
-                <textarea class="form-control" id="content" name="username" placeholder="유저의 아이디를 알려주세요."
-                  required></textarea>
-              </div>
-
+               <input type="hidden" name="userId" value="{{ userId }}">
               <button type="button" class="btn btn-success" onclick="submitForm()">글 작성</button>
               <button type="button" class="btn btn-success" onclick="returnToHome()">취소</button>
             </form>
@@ -132,7 +127,7 @@
       var formData = new FormData(document.getElementById("postForm"));
 
       // 서버로 데이터를 전송하는 AJAX 요청을 수행
-      fetch("{{ url_for('newPost') }}", {
+      fetch("{{ url_for('newPost', userId = userId) }}", {
         method: "POST",
         body: formData
       })
@@ -141,7 +136,7 @@
           console.error("Error:", error);
           // 오류 처리를 추가할 수 있음
         });
-      window.location.href = "{{ url_for('completePost') }}";
+      window.location.href = "{{ url_for('completePost', userId = userId) }}";
     }
   </script>
   <script>
