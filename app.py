@@ -47,8 +47,8 @@ def home():
     return render_template('index.html', user=current_user)
 
 
-@login_required
 @app.route('/newPost', methods=['GET', 'POST'])
+@login_required
 def newPost():
     if request.method == "POST":
         title = request.form.get('title')
