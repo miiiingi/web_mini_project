@@ -124,9 +124,8 @@
     <main>
       <div class="container">
         {%for post in posts%}
-        <!-- <a class="article_wrap" href="{{post.userId}}/{{post.postNumber}}"> -->
-        <a class="article_wrap" href="{{ url_for('userPost', userId = post.userId, postNumber = post.postNumber) }}">
-          <article>
+        <a class="article_wrap" href="{{post.userId}}/{{post.postNumber}}">
+          <article post_writer="{{post.userId}}" post_number="{{post.id}}">
             <div class="img_wrap">
               <img
                 src="https://lh3.googleusercontent.com/p/AF1QipOG9J0lJeSNU7qvXAmpTp9pzMQIlclrC6F8-2x6=s1360-w1360-h1020"

@@ -78,6 +78,16 @@ def newPost(userId):
         db.session.commit()
     return render_template('newPost.html', userId=userId)
 
+@app.route('/userPost/<userId>/<postNumber>')
+def userPost(userId, postNumber):
+    posts = Post_DB.query.filter_by(userId=userId, postNumber=postNumber)
+    return render_template('userPost.html', user=current_user, posts = posts, userId = userId, postNumber = postNumber)
+
+@app.route('/userPost/<userId>')
+def userPostAll(userId):
+    posts = Post_DB.query.filter_by(userId=userId)
+    return render_template('userPost.html', user=current_user, posts = posts, userId = userId)
+
 
 @app.route('/completePost/<userId>')
 def completePost(userId):
@@ -133,6 +143,7 @@ def is_userId_exists(userId):
 @app.route('/account/login/', methods=['GET', 'POST'], endpoint='login')
 def login():
     error = None
+    posts = Post_DB.query.all()
     if request.method == 'POST':
         userId = request.form.get('userId')
         password = request.form.get('password')
@@ -140,7 +151,7 @@ def login():
 
         if user and user.password == password:
             login_user(user)
-            return render_template('index.html', user=current_user)
+            return render_template('index.html', user=current_user, posts = posts)
 
         error = "잘못된 아이디 또는 비밀번호입니다. 다시 시도해주세요."
 
@@ -158,7 +169,8 @@ def load_user(user_id):
 @login_required
 def logout():
     logout_user()
-    return render_template('index.html', user=current_user)
+    posts = Post_DB.query.all()
+    return render_template('index.html', user=current_user, posts = posts)
 
 # Unauthorized 에러 핸들링
 
