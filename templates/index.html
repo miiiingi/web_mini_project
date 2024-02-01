@@ -154,7 +154,6 @@
     <main>
       <div class="container">
         {%for post in posts%}
-        <!-- <a class="article_wrap" href="{{post.userId}}/{{post.postNumber}}"> -->
         <a class="article_wrap" href="{{ url_for('userPost', userId = post.userId, postNumber = post.postNumber) }}">
           <article>
             <div class="img_wrap">
