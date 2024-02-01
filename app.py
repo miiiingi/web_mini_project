@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, abort
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 import secrets
@@ -40,7 +40,7 @@ with app.app_context():
 # 테스트용 메인 페이지 라우팅
 @app.route('/')
 def testMain():
-    return render_template('test.html')
+    return render_template('test.html', user=current_user)
 
 # 회원가입 페이지
 @app.route('/account/signup/', methods=['GET', 'POST'], endpoint='signup')
@@ -85,9 +85,9 @@ def login():
 
         if user and user.password == password:
             login_user(user)
-            return redirect(url_for('user_profile', userId=user.userId))
+            return render_template('test.html', user=current_user)
 
-        error = "잘못된 이메일 또는 비밀번호입니다. 다시 시도해주세요."
+        error = "잘못된 아이디 또는 비밀번호입니다. 다시 시도해주세요."
 
     return render_template('login.html', error=error)
 
@@ -100,17 +100,12 @@ def load_user(user_id):
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('testMain'))
+    return render_template('test.html', user=current_user)
 
-# 로그인 확인 테스트 페이지용 함수
-@app.route('/<userId>', endpoint='user_profile')
-@login_required
-def user_profile(userId):
-    # 현재 사용자와 요청된 사용자가 다르면 404 에러를 반환합니다.
-    if current_user.userId != userId:
-        abort(404)
-
-    return render_template('profile.html', user=current_user)
+# Unauthorized 에러 핸들링
+@app.errorhandler(401)
+def unauthorized(error):
+    return redirect(url_for('testMain', user=current_user))
 
 if __name__ == '__main__':  
     app.run(debug=True)
