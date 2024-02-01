@@ -39,8 +39,8 @@ with app.app_context():
 
 # 테스트용 메인 페이지 라우팅
 @app.route('/')
-def testMain():
-    return render_template('test.html', user=current_user)
+def home():
+    return render_template('index.html', user=current_user)
 
 # 회원가입 페이지
 @app.route('/account/signup/', methods=['GET', 'POST'], endpoint='signup')
@@ -63,7 +63,7 @@ def signup():
         db.session.commit()
         db.session.close()
 
-        return redirect(url_for('testMain')) # 가입 성공 시 원래 화면으로
+        return redirect(url_for('home')) # 가입 성공 시 원래 화면으로
 
     return render_template('signup.html')
 
@@ -85,7 +85,7 @@ def login():
 
         if user and user.password == password:
             login_user(user)
-            return render_template('test.html', user=current_user)
+            return render_template('index.html', user=current_user)
 
         error = "잘못된 아이디 또는 비밀번호입니다. 다시 시도해주세요."
 
@@ -100,12 +100,12 @@ def load_user(user_id):
 @login_required
 def logout():
     logout_user()
-    return render_template('test.html', user=current_user)
+    return render_template('index.html', user=current_user)
 
 # Unauthorized 에러 핸들링
 @app.errorhandler(401)
 def unauthorized(error):
-    return redirect(url_for('testMain', user=current_user))
+    return redirect(url_for('home', user=current_user))
 
 if __name__ == '__main__':  
     app.run(debug=True)
