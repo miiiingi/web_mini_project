@@ -5,12 +5,13 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 import secrets
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-file_name = 'post_db.db'
 post_db_file_name = os.path.join(
-    os.path.abspath(os.path.dirname(__file__)), file_name)
+    os.path.abspath(os.path.dirname(__file__)), 'post_db.db')
+login_db_file_name = os.path.join(
+    os.path.abspath(os.path.dirname(__file__)), 'database.db')
 app = Flask(__name__)
 # 회원정보 데이터베이스
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + login_db_file_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # 게시글 데이터 베이스
 app.config['SQLALCHEMY_BINDS'] = {
