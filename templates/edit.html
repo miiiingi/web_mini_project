@@ -1,0 +1,87 @@
+<!Doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <!-- 네브바 색상  -->
+    <nav class="navbar bg-success" data-bs-theme="dark" style="display: flex; justify-content: end;">
+        <nav class="navbar bg-dark border-bottom border-bottom-dark" data-bs-theme="dark"
+            style="background-color: #28a745;">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid ">
+                    <ul class="navbar-nav">
+                        <!-- 메인페이지로 -->
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">홈</a>
+                        </li>
+                        <!-- 로그인된 아이디 --->
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">@email</a>
+                        </li>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </nav>
+    </nav>
+
+
+    <!-- 회원정보 수정 칸 -->
+    <form>
+        <!-- 가운데 정렬  -->
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <h1>마이페이지</h1>
+                    <!-- 한줄 띄기  -->
+                    <br>
+                    <!-- 이름  -->
+                    <div class="mb-3">
+                        <label for="exampleInputName1" class="form-label">이름</label>
+                        <input type="text" class="form-control" id="exampleInputName1">
+                    </div>
+                    <!-- 아이디  -->
+                    <div class="mb-3">
+                        <label for="exampleInputUsername1" class="form-label">아이디</label>
+                        <input type="text" class="form-control" id="exampleInputUsername1">
+                    </div>
+                    <!-- 비밀번호  -->
+                    <div class="mb-3">
+                        <!-- (for=id 같아야함) for 속성은 <label> 요소와 연결된 입력 요소의 id 속성과 매핑합니다. 이렇게 함으로써 화면에서 레이블을 클릭하면 연결된 입력 필드로 포커스가 이동합니다. 그렇기 때문에 for 속성값은 연결하려는 입력 필드의 id 속성값과 일치해야 합니다. -->
+                        <!-- 연결할때 메모장 확인         -->
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <!-- 이메일  -->
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary float-end">수정 완료</button>
+    </form>
+    </div>
+    </div>
+    </div>
+    <!-- 회원정보 수정 칸 끝 -->
+
+    <!-- <h1>마이페이지</h1>
+    <p>'이름': '이은미'</p>
+    <p>'ID': 'minnie'</p>
+    <p>'PW': 'hello'</p>
+    <p>'email': 'eunmi@gmail.com'</p> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
