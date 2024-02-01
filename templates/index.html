@@ -124,7 +124,7 @@
     <main>
       <div class="container">
         {%for post in posts%}
-        <a class="article_wrap" href="/">
+        <a class="article_wrap" href="{{post.userId}}/{{post.postNumber}}">
           <article post_writer="{{post.username}}" post_number="{{post.id}}">
             <div class="img_wrap">
               <img
@@ -141,19 +141,7 @@
         {% endfor %}
       </div>
     </main>
-
     <footer>footer</footer>
-    <script>
-      // const posts = document.getElementsByTagName("article");
-
-      // for (let i = 0; i < posts.length; i++) {
-      //   posts[i].addEventListener("click", function () {
-      //     const postWriter = this.getAttribute("post_writer");
-      //     const postNumber = this.getAttribute("post_number");
-      //     window.location.href = `${postWriter}/${postNumber}`;
-      //   });
-      // }
-    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script
