@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>맛집소개</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    height: 100px;
+    background-color: #4ba66a;
+  }
+
+  main {
+    background: #fff;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  footer {
+    height: 100px;
+    background-color: #4ba66a;
+    margin-top: auto;
+  }
+
+  .container {
+    background: #f7edda;
+    width: 80%;
+    max-width: 800px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  article {
+    width: 90%;
+    height: 200px;
+    border: 2px solid #46a65e;
+    border-radius: 12px;
+    margin: 40px auto 0;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  .img_wrap {
+    height: 150px;
+    width: 200px;
+    border: 1px solid black;
+    margin-right: 50px;
+  }
+
+  .text_wrap {
+    height: 150px;
+  }
+</style>
+
+<body>
+  <!-- Bootstrap Navbar 추가 -->
+  <header class="navbar navbar-expand-lg navbar-light bg-light">
+  </header>
+  <main>
+    <div class="container">
+      <div class="container custom-container">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <!-- 수정된 부분: "글쓰기가 완료되었습니다." 메시지 출력 -->
+            <div class="alert alert-success" role="alert">
+              글쓰기가 완료되었습니다.
+            </div>
+            <!-- 글 작성 폼 삭제 -->
+
+            <!-- 취소 버튼 클릭 시 홈페이지로 이동하는 함수 추가 -->
+            <button type="button" class="btn btn-success" onclick="returnToHome()">홈페이지로 이동</button>
+            <button type="button" class="btn btn-success" onclick="returnToNewPost()">다른 글 작성하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+
+  <footer>footer</footer>
+
+  <!-- Bootstrap JS 및 Popper.js 및 jQuery CDN 추가 -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script>
+    function returnToHome() {
+      window.location.href = "{{ url_for('home') }}";
+    }
+  </script>
+  <script>
+    function returnToNewPost() {
+      window.location.href = "{{ url_for('newPost') }}";
+    }
+  </script>
+
+</body>
+
+</html>
