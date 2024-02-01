@@ -12,30 +12,28 @@
 <body>
     <!-- Navbar -->
     <!-- 네브바 색상  -->
-    <nav class="navbar bg-success" data-bs-theme="dark" style="display: flex; justify-content: end;">
-        <nav class="navbar bg-dark border-bottom border-bottom-dark" data-bs-theme="dark"
-            style="background-color: #28a745;">
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                <div class="container-fluid ">
-                    <ul class="navbar-nav">
-                        <!-- 메인페이지로 -->
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">홈</a>
-                        </li>
-                        <!-- 로그인된 아이디 --->
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ url_for('accounts') }}">mypage</a>
-                        </li>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success mb-3" data-bs-theme="dark"
+        style="display: flex; justify-content: end; background-color: #28a745;">
+        <div class="container-fluid">
+            <div class="ms-3">
+                <img
+                    src="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/webjong/images/sparta-logo.svg"
+                    alt="">
+            </div>
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">메인페이지</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('myPage') }}">사용자 {{user.name}}님</a>
+            </ul>
+        </div>
     </nav>
 
 
     <!-- 회원정보 수정 칸 -->
-    <form action="{{ url_for('update_member') }}" method="patch" name="edit_members">
+    <form method="POST" action="{{ url_for('update_account', userId=user.userId) }}">
         <!-- 가운데 정렬  -->
         <div class="container mt-5">
             <div class="row justify-content-center">
@@ -67,48 +65,11 @@
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary float-end" onclick="updateMember()">수정 완료</button>
+                    <button type="submit" class="btn btn-success float-end">수정 완료</button>
                 </div>
             </div>
             </div>
                 </form>
-    <!-- 회원정보 수정 칸 끝 -->
-
-    <!-- <script>
-        function updateMember() {
-            // 사용자 입력 값 가져오기
-            const name = document.getElementById("name").value;
-            const userId = document.getElementById("userId").value;
-            const password = document.getElementById("password").value;
-            const email = document.getElementById("email").value;
-
-            // 회원 정보 객체 생성
-            const memberData = { "name": name, "userId": userId, "password": password, "email": email };
-
-            // 서버에 PATCH 요청 보내기
-            fetch('/members/1', {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(memberData),
-            })
-            .then(response => response.json())
-            .then(data => {
-                // 서버 응답 처리
-                console.log(data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        }
-    </script> -->
-
-    <!-- <h1>마이페이지</h1>
-    <p>'이름': '이은미'</p>
-    <p>'ID': 'minnie'</p>
-    <p>'PW': 'hello'</p>
-    <p>'email': 'eunmi@gmail.com'</p> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
