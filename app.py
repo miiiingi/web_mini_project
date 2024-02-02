@@ -14,11 +14,18 @@ app = Flask(__name__)
 # 회원정보 데이터베이스
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + login_db_file_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# 게시글 데이터 베이스
-app.config['SQLALCHEMY_BINDS'] = {
-    'secondary': 'sqlite:///' + post_db_file_name
-}
+# # 게시글 데이터 베이스
+# app.config['SQLALCHEMY_BINDS'] = {
+#     'secondary': 'sqlite:///' + post_db_file_name
+# }
 db = SQLAlchemy(app)
+
+# 시크릿 키 추가
+app.secret_key = secrets.token_hex(16)
+
+# 로그인 관련 세팅
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 class Accounts(db.Model, UserMixin):
@@ -34,7 +41,7 @@ class Accounts(db.Model, UserMixin):
 
 
 class Post_DB(db.Model):
-    __bind_key__ = 'secondary'
+    # __bind_key__ = 'secondary'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text, nullable=False)
     content = db.Column(db.Text, nullable=False)
@@ -45,7 +52,7 @@ class Post_DB(db.Model):
 
 with app.app_context():
     db.create_all()
-    db.create_all(bind_key='secondary')
+    # db.create_all(bind_key='secondary')
 
 # 테스트용 메인 페이지 라우팅
 
@@ -102,9 +109,9 @@ def userPostAll(userId):
 def editPost(userId, postNumber):
     post = Post_DB.query.filter_by(
         userId=userId, postNumber=postNumber).first()
-    if not post:
-        flash('게시물을 찾을 수 없습니다.', 'danger')
-        return redirect(url_for('userPost', userId=userId, postNumber=postNumber))
+    # if not post:
+    #     flash('게시물을 찾을 수 없습니다.', 'danger')
+    #     return redirect(url_for('userPost', userId=userId, postNumber=postNumber))
 
     if request.method == 'POST':
         # 수정된 내용을 받아와서 기존 레코드를 업데이트
@@ -112,8 +119,8 @@ def editPost(userId, postNumber):
         post.content = request.form.get('content')
         post.address = request.form.get('address')
         db.session.commit()
-        flash('게시물이 성공적으로 수정되었습니다.', 'success')
-        return redirect(url_for('userPost', userId=userId, postNumber=postNumber))
+        # flash('게시물이 성공적으로 수정되었습니다.', 'success')
+        return redirect(url_for('home'))
 
     return render_template('editPost.html', user=current_user, posts=post, userId=userId, postNumber=postNumber)
 
@@ -133,14 +140,6 @@ def deletePost(userId, postNumber):
 @app.route('/completePost/<userId>')
 def completePost(userId):
     return render_template('completePost.html', user=current_user,userId=userId)
-
-
-# 시크릿 키 추가
-app.secret_key = secrets.token_hex(16)
-
-# 로그인 관련 세팅
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 
 # 회원가입 페이지
