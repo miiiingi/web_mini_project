@@ -157,7 +157,7 @@
             <p class="card-text">{{post.content}}</p>
             <p class="card-text">{{post.address}}</p>
             <!-- "수정" 링크 -->
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated and current_user.userId == post.userId %}
             <a href="{{ url_for('editPost', userId = post.userId, postNumber = post.postNumber) }}"
               class="btn btn-success">수정</a>
 
