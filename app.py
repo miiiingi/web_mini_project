@@ -47,7 +47,9 @@ class Post_DB(db.Model):
     content = db.Column(db.Text, nullable=False)
     address = db.Column(db.Text, nullable=False)
     userId = db.Column(db.Text, nullable=False)
-    postNumber = db.Column(db.Integer, nullable=False, default=1)
+    imgUrl = db.Column(db.Text, nullable=False)
+    postNumber = db.Column(db.Integer, nullable=False, 
+    default=1)
 
 
 with app.app_context():
@@ -71,6 +73,7 @@ def newPost(userId):
         content = request.form.get('content')
         address = request.form.get('address')
         userId = request.form.get('userId')
+        imgUrl = request.form.get('imgUrl')
         existing_post = Post_DB.query.filter_by(
             userId=userId).order_by(desc(Post_DB.postNumber)).first()
         if existing_post:
@@ -79,7 +82,8 @@ def newPost(userId):
                 content=content,
                 address=address,
                 userId=userId,
-                postNumber=existing_post.postNumber + 1
+                imgUrl=imgUrl,
+                postNumber=existing_post.postNumber + 1,
             )
         else:
             post_db = Post_DB(
@@ -87,6 +91,7 @@ def newPost(userId):
                 content=content,
                 address=address,
                 userId=userId,
+                imgUrl=imgUrl
             )
         db.session.add(post_db)
         db.session.commit()
