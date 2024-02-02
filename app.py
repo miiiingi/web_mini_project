@@ -123,6 +123,7 @@ def editPost(userId, postNumber):
         post.title = request.form.get('title')
         post.content = request.form.get('content')
         post.address = request.form.get('address')
+        post.imgUrl = request.form.get('imgUrl')
         db.session.commit()
         # flash('게시물이 성공적으로 수정되었습니다.', 'success')
         return redirect(url_for('home'))
