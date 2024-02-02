@@ -7,29 +7,214 @@
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
 </head>
+
+<style>
+    h2 {
+        margin-bottom: 40px;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 30px;
+    }
+
+    .btn-modify {
+        margin-top: 15px;
+    }
+
+    .navbar {
+        background-color: #28a745;
+    }
+
+    /* 가져온 스타일 --------------------------- */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        padding: 0 20px;
+        background-color: #f5f5f5;
+        position: fixed;
+        width: 100%;
+        border: 1px solid #b3b3b3;
+        height: 50px;
+        display: flex;
+        align-items: center;
+
+        p {
+            font-size: 18px;
+            margin: 0 auto;
+            width: fit-content;
+        }
+    }
+
+    .bi-house-door {
+        font-size: 30px;
+        color: #4ba66a;
+        position: absolute;
+        top: 0;
+        left: 20px;
+    }
+
+    .header_user_container {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        position: absolute;
+        top: 2px;
+        right: 20px;
+    }
+
+    .bi-person-circle {
+        font-size: 28px;
+        margin-bottom: 4px;
+    }
+
+    .header_user_button {
+        border: 1px solid #959595;
+        border-radius: 16px;
+        color: #666;
+        font-size: 12px;
+        height: 28px;
+        line-height: 28px;
+        margin-top: -5px;
+        text-align: center;
+        text-decoration: none;
+        width: 64px;
+    }
+
+    main {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 10px 20px;
+        background: #f5f5f5;
+    }
+
+    .header_user_button:hover {
+        background: #959595;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    /* .container {
+      margin: 40px auto;
+      background: #f5f5f5;
+      max-width: 930px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    } */
+
+    /* .article_wrap {
+      color: #000;
+      text-decoration: none;
+      width: 288px;
+      height: 362px;
+    } */
+
+    /* .article_wrap:hover {
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    article {
+      height: 362px;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+    }
+
+    img {
+      width: 288px;
+      height: 168px;
+    }
+
+    .text_wrap {
+      padding: 10px 20px;
+    }
+
+    .address {
+      font-size: 0.8rem;
+      color: #909090;
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    } */
+
+    /* .title {
+      font-size: 1.5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    } */
+
+    /* .content {
+      overflow: hidden;
+      white-space: normal;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-decoration-line: none;
+      word-break: keep-all;
+      margin-bottom: 32px;
+      font-size: 0.9rem;
+      color: #333;
+    } */
+
+    /* .writer {
+
+        
+</style>
 
 <body>
     <!-- Navbar -->
     <!-- 네브바 색상  -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success mb-3" data-bs-theme="dark"
-        style="display: flex; justify-content: end; background-color: #28a745;">
-        <div class="container-fluid">
-            <div class="ms-3">
-                <img
-                    src="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/webjong/images/sparta-logo.svg"
-                    alt="">
-            </div>
+    <header>
+        <a href="/">
+            <i class="bi bi-house-door"></i>
+        </a>
+        <p>푸드로그</p>
+        <div class="header_user_container">
+            {% if user.is_authenticated %}
+            <a class="header_user_button" href="{{ url_for('newPost', userId = user.userId) }}">글쓰기</a>
+            <a class="header_user_button" href="{{ url_for('logout') }}">로그아웃</a>
+            <a class="bi bi-person-circle" href="{{ url_for('myPage') }}"></a>
+            {% else %}
+            <a class="header_user_button" href="{{ url_for('login') }}">로그인</a>
+            <a class="header_user_button" href="{{ url_for('signup') }}">회원가입</a>
 
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">메인페이지</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ url_for('myPage') }}">사용자 {{user.name}}님</a>
-            </ul>
+            {% endif %}
         </div>
-    </nav>
+    </header>
+
+    <br>
+    <br>
+    <br>
 
 
     <!-- 회원정보 수정 칸 -->
@@ -38,7 +223,8 @@
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <h1>마이페이지</h1>
+                    <h1 class="text-center">마이페이지</h1>
+
                     <!-- 한줄 띄기  -->
                     <br>
                     <!-- 이름  -->
@@ -61,15 +247,16 @@
                     <!-- 이메일  -->
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            name="email">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
 
                     <button type="submit" class="btn btn-success float-end">수정 완료</button>
                 </div>
             </div>
-            </div>
-                </form>
+        </div>
+    </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>

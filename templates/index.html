@@ -197,7 +197,7 @@
         <a class="header_user_button" href="{{ url_for('logout') }}"
           >로그아웃</a
         >
-        <i class="bi bi-person-circle"></i>
+        <a class="bi bi-person-circle" href="{{ url_for('myPage') }}"></a>
         {% else %}
         <a class="header_user_button" href="{{ url_for('login') }}">로그인</a>
         <a class="header_user_button" href="{{ url_for('signup') }}"
