@@ -180,6 +180,15 @@
       background-color: #333;
       color: white;
     }
+
+    .searchInput {
+      border: 1px solid rgb(138, 138, 138);
+    }
+
+    .searchBtn {
+      border: 1px solid rgb(138, 138, 138);
+      border-radius: 2px;
+    }
   </style>
 
   <body>
@@ -212,8 +221,13 @@
     <main>
       <div class="search-form">
         <form method="post" action="{{ url_for('search') }}">
-          <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
-          <button type="submit">검색</button>
+          <input
+            class="searchInput"
+            type="text"
+            name="keyword"
+            placeholder="검색어를 입력하세요"
+          />
+          <button class="searchBtn" type="submit">검색</button>
         </form>
       </div>
       <div class="container">
