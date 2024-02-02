@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>맛집소개</title>
+    <title>작성 완료</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -66,6 +66,7 @@
     .bi-person-circle {
       font-size: 28px;
       margin-bottom: 4px;
+      cursor: pointer;
     }
 
     .header_user_button {
@@ -79,6 +80,12 @@
       text-align: center;
       text-decoration: none;
       width: 64px;
+    }
+
+    .header_user_button:hover {
+      background: #959595;
+      color: #fff;
+      text-decoration: none;
     }
 
     main {
@@ -140,8 +147,16 @@
         >
         <i class="bi bi-person-circle"></i>
         {% else %}
-        <a class="header_user_button" href="{{ url_for('login') }}">로그인</a>
-        <a class="header_user_button" href="{{ url_for('signup') }}"
+        <a
+          class="header_user_button"
+          href="{{ url_for('login') }}"
+          style="margin-top: 8px"
+          >로그인</a
+        >
+        <a
+          class="header_user_button"
+          href="{{ url_for('signup') }}"
+          style="margin-top: 8px"
           >회원가입</a
         >
 

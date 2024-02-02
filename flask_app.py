@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-from sqlalchemy import desc
+from sqlalchemy import desc, or_
 import secrets
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -63,6 +63,28 @@ with app.app_context():
 def home():
     posts = Post_DB.query.all()
     return render_template('index.html', user=current_user, posts=posts)
+
+# 검색 기능 구현하기
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        keyword = request.form.get('keyword')
+        if keyword:
+            # 검색어가 있는 경우 해당 키워드를 포함하는 게시글 검색
+            posts = Post_DB.query.filter(
+                or_(
+                    Post_DB.content.contains(keyword),
+                    Post_DB.address.contains(keyword),
+                    Post_DB.userId.contains(keyword),
+                    Post_DB.title.contains(keyword)
+                )
+            ).all()
+            return render_template('search.html', posts=posts, keyword=keyword, user=current_user)
+        else:
+            # 검색어가 없는 경우 전체 게시글을 표시
+            posts = Post_DB.query.all()
+            return redirect(url_for('home'))
+    return render_template('search.html')
 
 
 @app.route('/newPost/<userId>', methods=['GET', 'POST'])
