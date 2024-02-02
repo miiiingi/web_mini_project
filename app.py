@@ -90,7 +90,7 @@ def newPost(userId):
             )
         db.session.add(post_db)
         db.session.commit()
-    return render_template('newPost.html', userId=userId)
+    return render_template('newPost.html', user=current_user,userId=userId)
 
 
 @app.route('/userPost/<userId>/<postNumber>')
@@ -139,7 +139,7 @@ def deletePost(userId, postNumber):
 
 @app.route('/completePost/<userId>')
 def completePost(userId):
-    return render_template('completePost.html', userId=userId)
+    return render_template('completePost.html', user=current_user,userId=userId)
 
 
 # 회원가입 페이지
