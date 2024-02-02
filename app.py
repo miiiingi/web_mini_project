@@ -219,6 +219,40 @@ def logout():
 def unauthorized(error):
     return redirect(url_for('home', user=current_user))
 
+# ---------------- 은미 --------------------
 
-if __name__ == '__main__':
+# 마이 페이지 
+@app.route('/accounts/my')
+@login_required
+def myPage():
+    return render_template('mypage.html', user=current_user)
+
+@app.route('/accounts/edit')
+@login_required
+def editPage():
+    return render_template('edit.html', user=current_user)
+
+@app.route('/accounts/<userId>', methods=['POST'])
+@login_required
+def update_account(userId):
+    # 아이디를 가져와서
+    desiredUserId = request.form.get('userId')
+    desiredPassword = request.form.get('password')
+    desiredEmail = request.form.get('email')
+
+    # 이 아이디를 가진 사용자 정보를 찾아오고
+    account = Accounts.query.filter_by(userId=userId).first()
+
+    # 폼에 적어둔 정보로 덮어쓰기
+    if account:
+        account.userId = desiredUserId
+        account.password = desiredPassword
+        account.email = desiredEmail
+
+    db.session.commit()
+    return render_template('mypage.html', user=current_user)
+
+
+
+if __name__ == '__main__':  
     app.run(debug=True)
