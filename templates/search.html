@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>푸드로그</title>
+    <title>맛집소개</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -13,12 +13,6 @@
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-    />
-    <meta property="og:title" content="푸드로그" />
-    <meta property="og:description" content="내가 아는 맛집을 공유해봐요!" />
-    <meta
-      property="og:image"
-      content="https://img.freepik.com/free-vector/hand-drawn-people-taking-pictures-of-food-illustration_23-2150493785.jpg?size=626&ext=jpg"
     />
   </head>
 
@@ -75,7 +69,6 @@
     .bi-person-circle {
       font-size: 28px;
       margin-bottom: 4px;
-      cursor: pointer;
     }
 
     .header_user_button {
@@ -89,12 +82,6 @@
       text-align: center;
       text-decoration: none;
       width: 64px;
-    }
-
-    .header_user_button:hover {
-      background: #959595;
-      color: #fff;
-      text-decoration: none;
     }
 
     main {
@@ -220,18 +207,10 @@
         <a class="header_user_button" href="{{ url_for('logout') }}"
           >로그아웃</a
         >
-        <a class="bi bi-person-circle" href="{{ url_for('myPage') }}"></a>
+        <i class="bi bi-person-circle"></i>
         {% else %}
-        <a
-          class="header_user_button"
-          href="{{ url_for('login') }}"
-          style="margin-top: 8px"
-          >로그인</a
-        >
-        <a
-          class="header_user_button"
-          href="{{ url_for('signup') }}"
-          style="margin-top: 8px"
+        <a class="header_user_button" href="{{ url_for('login') }}">로그인</a>
+        <a class="header_user_button" href="{{ url_for('signup') }}"
           >회원가입</a
         >
 
@@ -242,13 +221,8 @@
     <main>
       <div class="search-form">
         <form method="post" action="{{ url_for('search') }}">
-          <input
-            class="searchInput"
-            type="text"
-            name="keyword"
-            placeholder="검색어를 입력하세요"
-          />
-          <button class="searchBtn" type="submit">검색</button>
+          <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
+          <button type="submit">검색</button>
         </form>
       </div>
       <div class="container">
