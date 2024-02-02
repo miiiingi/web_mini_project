@@ -50,6 +50,7 @@
 
     .bi-house-door {
       font-size: 30px;
+      color: #4ba66a;
     }
 
     .header_user_container {
@@ -81,7 +82,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 120px 10px 20px;
+      padding: 80px 10px 20px;
       background: #f5f5f5;
     }
 
@@ -175,12 +176,12 @@
 
   <body>
     <header>
-      <i class="bi bi-house-door"></i>
+      <a href="/">
+        <i class="bi bi-house-door"></i>
+      </a>
       <p>맛집소개</p>
       <div class="header_user_container">
         {% if user.is_authenticated %}
-        <!-- <p>{{ user.userId }}님 반가워요!</p> -->
-
         <a
           class="header_user_button"
           href="{{ url_for('newPost', userId = user.userId) }}"
