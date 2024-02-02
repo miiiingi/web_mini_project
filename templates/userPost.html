@@ -1,261 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>맛집소개</title>
 
-    <!-- Bootstrap CSS CDN 추가 -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-    />
-  </head>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>맛집소개</title>
+
+  <!-- Bootstrap CSS CDN 추가 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    padding: 0 20px;
+    background-color: #f5f5f5;
+    position: fixed;
+    width: 100%;
+    border: 1px solid #b3b3b3;
+    height: 50px;
+    display: flex;
+    align-items: center;
+
+    p {
+      font-size: 18px;
+      margin: 0 auto;
+      width: fit-content;
     }
+  }
 
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-    }
+  .bi-house-door {
+    font-size: 30px;
+    color: #4ba66a;
+    position: absolute;
+    top: 0;
+    left: 20px;
+  }
 
-    header {
-      padding: 0 20px;
-      background-color: #f5f5f5;
-      position: fixed;
-      width: 100%;
-      border: 1px solid #b3b3b3;
-      height: 50px;
-      display: flex;
-      align-items: center;
+  .header_user_container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: absolute;
+    top: 2px;
+    right: 20px;
+  }
 
-      p {
-        font-size: 18px;
-        margin: 0 auto;
-        width: fit-content;
-      }
-    }
+  .bi-person-circle {
+    font-size: 28px;
+    margin-bottom: 4px;
+  }
 
-    .bi-house-door {
-      font-size: 30px;
-      color: #4ba66a;
-      position: absolute;
-      top: 0;
-      left: 20px;
-    }
+  .header_user_button {
+    border: 1px solid #959595;
+    border-radius: 16px;
+    color: #666;
+    font-size: 12px;
+    height: 28px;
+    line-height: 28px;
+    margin-top: -5px;
+    text-align: center;
+    text-decoration: none;
+    width: 64px;
+  }
 
-    .header_user_container {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      position: absolute;
-      top: 2px;
-      right: 20px;
-    }
+  main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    padding: 80px 10px 20px;
+    background: #f5f5f5;
+  }
 
-    .bi-person-circle {
-      font-size: 28px;
-      margin-bottom: 4px;
-    }
+  footer {
+    width: 100%;
+    height: 100px;
+    background-color: #4ba66a;
+  }
 
-    .header_user_button {
-      border: 1px solid #959595;
-      border-radius: 16px;
-      color: #666;
-      font-size: 12px;
-      height: 28px;
-      line-height: 28px;
-      margin-top: -5px;
-      text-align: center;
-      text-decoration: none;
-      width: 64px;
-    }
+  .container {
+    margin: 40px auto;
+    background: #f5f5f5;
+    max-width: 930px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
 
-    main {
-      flex-grow: 1;
-      display: flex;
-      justify-content: center;
-      padding: 80px 10px 20px;
-      background: #f5f5f5;
-    }
+  .article_wrap {
+    color: #000;
+    text-decoration: none;
+    width: 288px;
+    height: 362px;
+  }
 
-    footer {
-      width: 100%;
-      height: 100px;
-      background-color: #4ba66a;
-    }
+  .article_wrap:hover {
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+  }
 
-    .container {
-      margin: 40px auto;
-      background: #f5f5f5;
-      max-width: 930px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
+  article {
+    height: 362px;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+  }
 
-    .article_wrap {
-      color: #000;
-      text-decoration: none;
-      width: 288px;
-      height: 362px;
-    }
+  img {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+  }
 
-    .article_wrap:hover {
-      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
-    }
+  .text_wrap {
+    padding: 10px 20px;
+  }
 
-    article {
-      height: 362px;
-      display: flex;
-      flex-direction: column;
-      background: #fff;
-    }
+  .address {
+    font-size: 0.8rem;
+    color: #909090;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
 
-    img {
-      width: 288px;
-      height: 168px;
-    }
+  .title {
+    font-size: 1.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
 
-    .text_wrap {
-      padding: 10px 20px;
-    }
+  .content {
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-decoration-line: none;
+    word-break: keep-all;
+    margin-bottom: 32px;
+    font-size: 0.9rem;
+    color: #333;
+  }
 
-    .address {
-      font-size: 0.8rem;
-      color: #909090;
-      margin: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-    }
+  .writer {
+    font-size: 0.9rem;
+    color: #909090;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    margin-bottom: 0;
+  }
+</style>
 
-    .title {
-      font-size: 1.5rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-    }
+<body>
+  <header>
+    <a href="/">
+      <i class="bi bi-house-door"></i>
+    </a>
+    <p>푸드로그</p>
+    <div class="header_user_container">
+      {% if user.is_authenticated %}
+      <a class="header_user_button" href="{{ url_for('newPost', userId = user.userId) }}">글쓰기</a>
+      <a class="header_user_button" href="{{ url_for('logout') }}">로그아웃</a>
+      <i class="bi bi-person-circle"></i>
+      {% else %}
+      <a class="header_user_button" href="{{ url_for('login') }}">로그인</a>
+      <a class="header_user_button" href="{{ url_for('signup') }}">회원가입</a>
 
-    .content {
-      overflow: hidden;
-      white-space: normal;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      text-decoration-line: none;
-      word-break: keep-all;
-      margin-bottom: 32px;
-      font-size: 0.9rem;
-      color: #333;
-    }
-
-    .writer {
-      font-size: 0.9rem;
-      color: #909090;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      margin-bottom: 0;
-    }
-  </style>
-
-  <body>
-    <header>
-      <a href="/">
-        <i class="bi bi-house-door"></i>
-      </a>
-      <p>푸드로그</p>
-      <div class="header_user_container">
-        {% if user.is_authenticated %}
-        <a
-          class="header_user_button"
-          href="{{ url_for('newPost', userId = user.userId) }}"
-          >글쓰기</a
-        >
-        <a class="header_user_button" href="{{ url_for('logout') }}"
-          >로그아웃</a
-        >
-        <i class="bi bi-person-circle"></i>
-        {% else %}
-        <a class="header_user_button" href="{{ url_for('login') }}">로그인</a>
-        <a class="header_user_button" href="{{ url_for('signup') }}"
-          >회원가입</a
-        >
-
-        {% endif %}
-      </div>
-    </header>
-    <main>
-      <div class="container">
-        {% for post in posts %}
-        <div class="row">
-          <div class="col-md-8 offset-md-2">
-            <div class="card">
-              <div class="card-body" style="min-width: 800px">
-                <div class="img_wrap">
-                  <img src="{{post.imgUrl}}" />
-                </div>
-                <h5 class="card-title">{{post.title}}</h5>
-                <p class="card-text">{{post.content}}</p>
-                <p class="card-text">{{post.address}}</p>
-                <!-- "수정" 링크 -->
-                {% if user.is_authenticated and current_user.userId ==
-                post.userId %}
-                <a
-                  href="{{ url_for('editPost', userId = post.userId, postNumber = post.postNumber) }}"
-                  class="btn btn-success"
-                  >수정</a
-                >
-
-                <!-- "삭제" 링크 -->
-                <a
-                  href="{{ url_for('deletePost', userId=post.userId, postNumber=post.postNumber) }}"
-                  class="btn btn-success"
-                  >삭제</a
-                >
-                {% endif %}
+      {% endif %}
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      {% for post in posts %}
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <div class="card">
+            <div class="card-body">
+              <div class="img_wrap">
+                <img src="{{post.imgUrl}}" />
               </div>
+              <h5 class="card-title">{{post.title}}</h5>
+              <p class="card-text">{{post.content}}</p>
+              <p class="card-text">{{post.address}}</p>
+              <!-- "수정" 링크 -->
+              {% if user.is_authenticated and current_user.userId ==
+              post.userId %}
+              <a href="{{ url_for('editPost', userId = post.userId, postNumber = post.postNumber) }}"
+                class="btn btn-success">수정</a>
+
+              <!-- "삭제" 링크 -->
+              <a href="{{ url_for('deletePost', userId=post.userId, postNumber=post.postNumber) }}"
+                class="btn btn-success">삭제</a>
+              {% endif %}
             </div>
           </div>
         </div>
-        {% endfor %}
       </div>
-    </main>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
-      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+      {% endfor %}
+    </div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
