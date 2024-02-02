@@ -14,10 +14,10 @@ app = Flask(__name__)
 # 회원정보 데이터베이스
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + login_db_file_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# 게시글 데이터 베이스
-app.config['SQLALCHEMY_BINDS'] = {
-    'secondary': 'sqlite:///' + post_db_file_name
-}
+# # 게시글 데이터 베이스
+# app.config['SQLALCHEMY_BINDS'] = {
+#     'secondary': 'sqlite:///' + post_db_file_name
+# }
 db = SQLAlchemy(app)
 
 # 시크릿 키 추가
@@ -41,7 +41,7 @@ class Accounts(db.Model, UserMixin):
 
 
 class Post_DB(db.Model):
-    __bind_key__ = 'secondary'
+    # __bind_key__ = 'secondary'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text, nullable=False)
     content = db.Column(db.Text, nullable=False)
@@ -52,7 +52,7 @@ class Post_DB(db.Model):
 
 with app.app_context():
     db.create_all()
-    db.create_all(bind_key='secondary')
+    # db.create_all(bind_key='secondary')
 
 # 테스트용 메인 페이지 라우팅
 
