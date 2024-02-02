@@ -109,9 +109,9 @@ def userPostAll(userId):
 def editPost(userId, postNumber):
     post = Post_DB.query.filter_by(
         userId=userId, postNumber=postNumber).first()
-    if not post:
-        flash('게시물을 찾을 수 없습니다.', 'danger')
-        return redirect(url_for('userPost', userId=userId, postNumber=postNumber))
+    # if not post:
+    #     flash('게시물을 찾을 수 없습니다.', 'danger')
+    #     return redirect(url_for('userPost', userId=userId, postNumber=postNumber))
 
     if request.method == 'POST':
         # 수정된 내용을 받아와서 기존 레코드를 업데이트
@@ -119,8 +119,8 @@ def editPost(userId, postNumber):
         post.content = request.form.get('content')
         post.address = request.form.get('address')
         db.session.commit()
-        flash('게시물이 성공적으로 수정되었습니다.', 'success')
-        return redirect(url_for('userPost', userId=userId, postNumber=postNumber))
+        # flash('게시물이 성공적으로 수정되었습니다.', 'success')
+        return redirect(url_for('home'))
 
     return render_template('editPost.html', user=current_user, posts=post, userId=userId, postNumber=postNumber)
 
