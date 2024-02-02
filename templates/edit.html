@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!Doctype html>
 <html lang="en">
 
 <head>
@@ -109,89 +109,9 @@
         padding: 80px 10px 20px;
         background: #f5f5f5;
     }
-
-    .header_user_button:hover {
-        background: #959595;
-        color: #fff;
-        text-decoration: none;
-    }
-
-    /* .container {
-      margin: 40px auto;
-      background: #f5f5f5;
-      max-width: 930px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    } */
-
-    /* .article_wrap {
-      color: #000;
-      text-decoration: none;
-      width: 288px;
-      height: 362px;
-    } */
-
-    /* .article_wrap:hover {
-      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    article {
-      height: 362px;
-      display: flex;
-      flex-direction: column;
-      background: #fff;
-    }
-
-    img {
-      width: 288px;
-      height: 168px;
-    }
-
-    .text_wrap {
-      padding: 10px 20px;
-    }
-
-    .address {
-      font-size: 0.8rem;
-      color: #909090;
-      margin: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-    } */
-
-    /* .title {
-      font-size: 1.5rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-    } */
-
-    /* .content {
-      overflow: hidden;
-      white-space: normal;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      text-decoration-line: none;
-      word-break: keep-all;
-      margin-bottom: 32px;
-      font-size: 0.9rem;
-      color: #333;
-    } */
-
-    /* .writer {
-
-        
 </style>
 
-  <body>
+<body>
     <!-- Navbar -->
     <!-- 네브바 색상  -->
     <header>
@@ -224,7 +144,6 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <h1 class="text-center">마이페이지</h1>
-
                     <!-- 한줄 띄기  -->
                     <br>
                     <!-- 이름  -->
@@ -251,15 +170,20 @@
                             name="email">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
-
-                    <button type="submit" class="btn btn-success float-end">수정 완료</button>
+<br>
+                    <button type="submit" onclick='editPage()' class="btn btn-success float-end">수정 완료</button>
                 </div>
             </div>
         </div>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+
+    function editPage() {
+      window.location.href = "{{ url_for('myPage') }}";
+    }
+    </script>
 </body>
 
 </html>
