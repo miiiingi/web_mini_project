@@ -20,6 +20,13 @@ app.config['SQLALCHEMY_BINDS'] = {
 }
 db = SQLAlchemy(app)
 
+# 시크릿 키 추가
+app.secret_key = secrets.token_hex(16)
+
+# 로그인 관련 세팅
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 
 class Accounts(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -133,14 +140,6 @@ def deletePost(userId, postNumber):
 @app.route('/completePost/<userId>')
 def completePost(userId):
     return render_template('completePost.html', userId=userId)
-
-
-# 시크릿 키 추가
-app.secret_key = secrets.token_hex(16)
-
-# 로그인 관련 세팅
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 
 # 회원가입 페이지
