@@ -4,20 +4,21 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from sqlalchemy import desc, or_
 import secrets
+import requests
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 post_db_file_name = os.path.join(
     os.path.abspath(os.path.dirname(__file__)), 'post_db.db')
 login_db_file_name = os.path.join(
     os.path.abspath(os.path.dirname(__file__)), 'database.db')
+
+
 app = Flask(__name__)
 # 회원정보 데이터베이스
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + login_db_file_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # # 게시글 데이터 베이스
-# app.config['SQLALCHEMY_BINDS'] = {
-#     'secondary': 'sqlite:///' + post_db_file_name
-# }
+
 db = SQLAlchemy(app)
 
 # 시크릿 키 추가
@@ -26,6 +27,14 @@ app.secret_key = secrets.token_hex(16)
 # 로그인 관련 세팅
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+client_id = "zvrgo75qrd"
+client_secret = "QIHXgo70Jift7dUBwN73ePehzXbAVebpMGOToFu8"
+endpoint = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
+headers = {
+    "X-NCP-APIGW-API-KEY-ID": client_id,
+    "X-NCP-APIGW-API-KEY": client_secret,
+}
 
 
 class Accounts(db.Model, UserMixin):
@@ -48,8 +57,8 @@ class Post_DB(db.Model):
     address = db.Column(db.Text, nullable=False)
     userId = db.Column(db.Text, nullable=False)
     imgUrl = db.Column(db.Text, nullable=False)
-    postNumber = db.Column(db.Integer, nullable=False, 
-    default=1)
+    postNumber = db.Column(db.Integer, nullable=False,
+                           default=1)
 
 
 with app.app_context():
@@ -65,6 +74,8 @@ def home():
     return render_template('index.html', user=current_user, posts=posts)
 
 # 검색 기능 구현하기
+
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
@@ -117,19 +128,27 @@ def newPost(userId):
             )
         db.session.add(post_db)
         db.session.commit()
-    return render_template('newPost.html', user=current_user,userId=userId)
+    return render_template('newPost.html', user=current_user, userId=userId)
 
 
 @app.route('/userPost/<userId>/<postNumber>')
 def userPost(userId, postNumber):
-    posts = Post_DB.query.filter_by(userId=userId, postNumber=postNumber)
-    return render_template('userPost.html', user=current_user, posts=posts, userId=userId, postNumber=postNumber)
+    posts = Post_DB.query.filter_by(
+        userId=userId, postNumber=postNumber).first()
+    address = posts.address
+    url = f"{endpoint}?query={address}"
+    res = requests.get(url, headers=headers)
+    if res.json()['addresses']:
+        return render_template('userPost.html', user=current_user, post=posts, userId=userId, postNumber=postNumber, lat=res.json()['addresses'][0]['x'], lon=res.json()['addresses'][0]['y'])
+    else:
+        return render_template('userPost.html', user=current_user, post=posts, userId=userId, postNumber=postNumber, lat=127.1052133, lon=37.3595316)
 
 
 @app.route('/userPost/<userId>')
 def userPostAll(userId):
     posts = Post_DB.query.filter_by(userId=userId)
     return render_template('userPost.html', user=current_user, posts=posts, userId=userId)
+
 
 @app.route('/editPost/<userId>/<postNumber>', methods=['GET', 'POST'])
 @login_required
@@ -152,10 +171,12 @@ def editPost(userId, postNumber):
 
     return render_template('editPost.html', user=current_user, posts=post, userId=userId, postNumber=postNumber)
 
+
 @app.route('/deletePost/<userId>/<postNumber>')
 @login_required
 def deletePost(userId, postNumber):
-    post = Post_DB.query.filter_by(userId=userId, postNumber=postNumber).first()
+    post = Post_DB.query.filter_by(
+        userId=userId, postNumber=postNumber).first()
     if post:
         db.session.delete(post)
         db.session.commit()
@@ -167,7 +188,7 @@ def deletePost(userId, postNumber):
 
 @app.route('/completePost/<userId>')
 def completePost(userId):
-    return render_template('completePost.html', user=current_user,userId=userId)
+    return render_template('completePost.html', user=current_user, userId=userId)
 
 
 # 회원가입 페이지
@@ -248,16 +269,20 @@ def unauthorized(error):
 
 # ---------------- 은미 --------------------
 
-# 마이 페이지 
+# 마이 페이지
+
+
 @app.route('/accounts/my')
 @login_required
 def myPage():
     return render_template('mypage.html', user=current_user)
 
+
 @app.route('/accounts/edit')
 @login_required
 def editPage():
     return render_template('edit.html', user=current_user)
+
 
 @app.route('/accounts/<userId>', methods=['POST'])
 @login_required
@@ -280,6 +305,5 @@ def update_account(userId):
     return render_template('mypage.html', user=current_user)
 
 
-
-if __name__ == '__main__':  
+if __name__ == '__main__':
     app.run(debug=True)
